@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import EventsList from "@/components/events-list";
 import Link from "next/link";
 
 const Home = () => {
@@ -9,9 +10,9 @@ const Home = () => {
           <Button variant="default" asChild>
             <Link href="/create-event">Create Event</Link>
           </Button>
-          <Button variant="default">Add Attendee</Button>
         </div>
       </div>
+      <EventsList />
     </div>
   );
 };

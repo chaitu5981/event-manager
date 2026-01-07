@@ -6,3 +6,9 @@ export const createEventSchema = z.object({
   date: z.date().min(new Date(), "Date must be in the future"),
   capacity: z.number().min(1, "Capacity is required"),
 });
+
+export const addAttendeeSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.email("Invalid email address"),
+  eventId: z.string().min(1, "Event ID is required"),
+});

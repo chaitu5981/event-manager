@@ -12,3 +12,7 @@ export function formatDate(date: Date) {
     year: "numeric",
   });
 }
+
+export function shortenId(id: string) {
+  return id.slice(0, 3) + "..." + id.slice(-3);
+}
