@@ -43,14 +43,14 @@ const AddUpdateAttendeeForm = ({
     },
   });
   useEffect(() => {
-    if (attendeeId) {
+    if (attendee) {
       form.reset({
         name: attendee?.name,
         email: attendee?.email,
         eventId,
       });
     }
-  }, [attendeeId, attendee, form]);
+  }, [attendeeId, eventId, attendee, form]);
   const onSubmit = (data: z.infer<typeof addAttendeeSchema>) => {
     if (attendeeId) return updateAttendeeAction({ attendeeId, attendee: data });
     else addAttendeeAction(data);
