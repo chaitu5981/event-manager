@@ -66,7 +66,7 @@ const EventsList = () => {
               {event.capacity}
             </p>
           </CardContent>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex flex-col md:flex-row gap-4 justify-between">
             <div className="flex gap-2">
               <Button asChild>
                 <Link href={`/events/${event.id}/edit-event`}>Edit Event</Link>
@@ -100,7 +100,6 @@ const EventsList = () => {
               </AlertDialog>
             </div>
             <div>
-             
               <Button asChild>
                 <Link href={`/events/${event.id}/view-attendees`}>
                   View Attendees
