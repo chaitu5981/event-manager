@@ -5,7 +5,15 @@ import { toast } from "sonner";
 const useDeleteEvent = () => {
   const queryClient = useQueryClient();
   const { mutate: deleteEventAction, isPending } = useMutation({
-    mutationFn: (eventId: string) => deleteEvent(eventId),
+    mutationFn: async (eventId: string) => {
+      const response = await deleteEvent(eventId);
+      if (!response.success) {
+        throw new Error(response.error);
+      } else {
+        toast.success(response.message);
+        queryClient.invalidateQueries({ queryKey: ["events"] });
+      }
+    },
     onSuccess: () => {
       toast.success("Event deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["events"] });

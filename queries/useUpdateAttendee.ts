@@ -9,17 +9,21 @@ const useUpdateAttendee = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { mutate: updateAttendeeAction, isPending } = useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       attendeeId,
       attendee,
     }: {
       attendeeId: string;
       attendee: z.infer<typeof addAttendeeSchema>;
-    }) => updateAttendee(attendeeId, attendee),
-    onSuccess: () => {
-      toast.success("Attendee updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["attendees"] });
-      router.back();
+    }) => {
+      const response = await updateAttendee(attendeeId, attendee);
+      if (!response.success) {
+        throw new Error(response.error);
+      } else {
+        toast.success(response.message);
+        queryClient.invalidateQueries({ queryKey: ["attendee", attendeeId] });
+        router.back();
+      }
     },
     onError: (err) => {
       toast.error(err.message);

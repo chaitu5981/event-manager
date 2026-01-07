@@ -5,10 +5,14 @@ import { toast } from "sonner";
 const useDeleteAttendee = () => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
-    mutationFn: (attendeeId: string) => deleteAttendee(attendeeId),
-    onSuccess: () => {
-      toast.success("Attendee deleted succesfully");
-      queryClient.invalidateQueries({ queryKey: ["attendees"] });
+    mutationFn: async (attendeeId: string) => {
+      const response = await deleteAttendee(attendeeId);
+      if (!response.success) {
+        throw new Error(response.error);
+      } else {
+        toast.success(response.message);
+        queryClient.invalidateQueries({ queryKey: ["attendees"] });
+      }
     },
     onError: (e) => {
       toast.error(e.message);

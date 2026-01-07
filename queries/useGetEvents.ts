@@ -4,7 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 const useGetEvents = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["events"],
-    queryFn: getEvents,
+    queryFn: async () => {
+      const response = await getEvents();
+      if (!response.success) {
+        throw new Error(response.error);
+      } else {
+        return response.events;
+      }
+    },
   });
   return { data, isLoading, error };
 };
